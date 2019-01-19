@@ -10,7 +10,7 @@ type MyTreeNode struct {
 	node *tree.Node
 }
 
-func (myTreeNode *MyTreeNode) postOrder()  {
+func (myTreeNode *MyTreeNode) postOrder() {
 	if myTreeNode == nil || myTreeNode.node == nil {
 		return
 	}
@@ -21,7 +21,7 @@ func (myTreeNode *MyTreeNode) postOrder()  {
 	myTreeNode.node.Print()
 }
 
-func testSparse()  {
+func testSparse() {
 	s := intsets.Sparse{}
 
 	s.Insert(1)
@@ -30,9 +30,9 @@ func testSparse()  {
 	fmt.Println(s.Has(1000))
 	fmt.Println(s.Has(10000))
 }
- func main() {
+func main() {
 	var root tree.Node
-	fmt.Println(root)
+	//fmt.Println(root)
 
 	root = tree.Node{Value: 3}
 	root.Left = &tree.Node{}
@@ -41,18 +41,34 @@ func testSparse()  {
 	root.Right.Right = tree.CreateNode(2)
 
 	root.Right.Right.SetValue(3)
-	root.Right.Right.Print()
+	//root.Right.Right.Print()
 
 	/*nodes := []Node {
 		{value: 3},
 		{},
 		{6, nil, nil},
 	}*/
-	//root.Traverse()
-	var myTreeNode MyTreeNode
-	myTreeNode.node = &root
-	myTreeNode.postOrder()
+	root.Traverse()
+	/*var myTreeNode MyTreeNode
+	myTreeNode.node = &root*/
+	//myTreeNode.postOrder()
 
+	//testSparse()
+	/*nodeCount := 0
+	 root.TraverseFunc(func(node *tree.Node) {
+		 nodeCount++
+	 })
 
-	testSparse()
+	 fmt.Println("Node count:", nodeCount)*/
+
+	c := root.TraverseWithChannel()
+	maxNode := 0
+	for node := range c {
+		fmt.Println(node)
+		if node.Value > maxNode {
+			maxNode = node.Value
+		}
+	}
+	fmt.Println("Max node value:", maxNode)
+
 }

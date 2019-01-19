@@ -1,5 +1,7 @@
 package main
 
+import ""
+
 func main() {
-	$END$
+	var root TreeNode
 }

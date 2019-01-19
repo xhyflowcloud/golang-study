@@ -1,10 +1,32 @@
 package tree
 
-func (node *Node) Traverse()  {
+import "fmt"
+
+func (node *Node) Traverse() {
+	node.TraverseFunc(func(node *Node) {
+		node.Print()
+	})
+	fmt.Println()
+}
+
+func (node *Node) TraverseFunc(f func(node *Node)) {
 	if node == nil {
 		return
 	}
-	node.Print()
-	node.Left.Traverse()
-	node.Right.Traverse()
+	node.Left.TraverseFunc(f)
+	f(node)
+	node.Right.TraverseFunc(f)
+}
+
+func (node *Node) TraverseWithChannel() chan *Node {
+	out := make(chan *Node)
+
+	go func() {
+		node.TraverseFunc(func(node *Node) {
+			out <- node
+		})
+		close(out)
+	}()
+
+	return out
 }

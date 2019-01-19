@@ -3,7 +3,7 @@ package tree
 import "fmt"
 
 type Node struct {
-	Value int
+	Value       int
 	Left, Right *Node
 }
 
@@ -42,6 +42,5 @@ func main() {
 		{6, nil, nil},
 	}*/
 	root.Traverse()
-	var pRoot *Node
-	pRoot.SetValue(200)
+
 }
